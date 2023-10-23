@@ -1,0 +1,14 @@
+[
+  {
+    "model": "courses_app.payment",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "payment_date": "2023-10-22T12:00:00Z",
+      "course": 1,
+      "lesson": null,
+      "amount": "1000.00",
+      "payment_method": "cash"
+    }
+  }
+]

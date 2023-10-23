@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import Lesson
+from lessons_app.models import Lesson
 
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
-        fields = '__all__'
+        fields = ['id', 'title', 'description', 'preview_image', 'video_link']

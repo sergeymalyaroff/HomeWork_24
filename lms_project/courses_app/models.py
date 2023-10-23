@@ -1,6 +1,8 @@
+#courses_app/models.py
+
 from django.db import models
 from django.conf import settings
-from lessons_app.models import Lesson
+
 
 
 
@@ -23,7 +25,7 @@ class Payment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     payment_date = models.DateTimeField(auto_now_add=True)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
-    lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True, blank=True)
+    lesson = models.ForeignKey('lessons_app.Lesson', on_delete=models.SET_NULL, null=True, blank=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.CharField(max_length=8, choices=PAYMENT_METHODS)
 
