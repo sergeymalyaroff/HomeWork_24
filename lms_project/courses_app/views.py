@@ -4,10 +4,24 @@ from .serializers import CourseSerializer
 from .models import Payment
 from .serializers import PaymentSerializer
 from .filters import PaymentFilter
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import BasePermission
+
+
+class IsOwnerOrModerator(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return request.user == obj.user or request.user.groups.filter(name='Moderators').exists()
+
+class IsModerator(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.groups.filter(name='Moderators').exists()
 
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsModerator)
+    permission_classes = (IsAuthenticated, IsOwnerOrModerator)
 
 
 
