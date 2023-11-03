@@ -1,3 +1,5 @@
+#lms_project/courses_app/filters.py
+
 import django_filters
 from .models import Payment
 

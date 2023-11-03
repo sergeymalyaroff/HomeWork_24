@@ -1,3 +1,5 @@
+#lms_project/courses_app/serializers.py
+
 from .models import Course
 from lessons_app.serializers import LessonSerializer
 from lessons_app.models import Lesson

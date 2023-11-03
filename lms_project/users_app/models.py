@@ -1,3 +1,5 @@
+#lms_project/users_app/models.py
+
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import Permission
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin

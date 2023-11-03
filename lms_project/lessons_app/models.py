@@ -1,3 +1,5 @@
+#lms_project/lessons_app/models.py
+
 from django.db import models
 
 

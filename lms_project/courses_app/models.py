@@ -1,4 +1,4 @@
-#courses_app/models.py
+#lms_project/courses_app/models.py
 
 from django.db import models
 from django.conf import settings

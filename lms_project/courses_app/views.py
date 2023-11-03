@@ -1,3 +1,5 @@
+#lms_project/courses_app/vievs.py
+
 from rest_framework import viewsets
 from .models import Course
 from .serializers import CourseSerializer
@@ -19,14 +21,11 @@ class IsModerator(BasePermission):
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    permission_classes = (IsAuthenticated,)
-    permission_classes = (IsAuthenticated, IsModerator)
     permission_classes = (IsAuthenticated, IsOwnerOrModerator)
-
-
 
 
 class PaymentViewSet(viewsets.ModelViewSet):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
     filterset_class = PaymentFilter
+    permission_classes = (IsAuthenticated, IsOwnerOrModerator,)

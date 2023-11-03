@@ -1,8 +1,11 @@
+#requirements.txt
+
 djangorestframework
 psycopg2-binary
 python-decouple
 Pillow
 django-filter
 djangorestframework-jwt
+djangorestframework-simplejwt
 djangorestframework-simplejwt
 

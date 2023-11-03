@@ -1,3 +1,5 @@
+#lms_project/users_app/apps.py
+
 from django.apps import AppConfig
 
 

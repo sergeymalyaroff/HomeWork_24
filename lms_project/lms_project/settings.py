@@ -1,3 +1,5 @@
+
+
 """
 Django settings for lms_project project.
 
@@ -168,4 +170,13 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': timedelta(seconds=300),
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+
 }

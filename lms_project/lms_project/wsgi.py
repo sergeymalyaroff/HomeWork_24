@@ -1,3 +1,5 @@
+#lms_project/lms_project_app/wsgi.py
+
 """
 WSGI config for lms_project project.
 
