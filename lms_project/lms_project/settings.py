@@ -1,6 +1,7 @@
-
+#lms_project/lms_project/settings.py
 
 """
+
 Django settings for lms_project project.
 
 
@@ -53,6 +54,8 @@ INSTALLED_APPS = [
     'lessons_app',
 
     'django_filters',
+
+    'drf_yasg',
 
 
 ]
