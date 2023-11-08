@@ -7,4 +7,5 @@ djangorestframework-jwt
 djangorestframework-simplejwt
 coverage
 drf-yasg
+stripe
 

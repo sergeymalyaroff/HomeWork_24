@@ -10,4 +10,7 @@ router.register(r'subscriptions', CourseSubscriptionViewSet, basename='course-su
 
 urlpatterns = [
     path('', include(router.urls)),  # Включаем все зарегистрированные маршруты одним вызовом
+    path('create-payment-intent/', CreatePaymentIntentView.as_view(), name='create-payment-intent'),
+    path('retrieve-payment-intent/', RetrievePaymentIntentView.as_view(), name='retrieve-payment-intent'),
+
 ]

@@ -12,6 +12,36 @@ from rest_framework import status, viewsets
 from rest_framework.response import Response
 from .models import CourseSubscription
 from .serializers import CourseSubscriptionSerializer
+import stripe
+from django.conf import settings
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+class CreatePaymentIntentView(APIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            # Создаем платежный интент
+            intent = stripe.PaymentIntent.create(
+                amount=request.data.get("amount"),  # Сумма в центах
+                currency='usd',  # Валюта
+                payment_method_types=['card'],  # Методы оплаты
+            )
+            return Response({"client_secret": intent.client_secret}, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+class RetrievePaymentIntentView(APIView):
+    def get(self, request, *args, **kwargs):
+        try:
+            # Получаем платежный интент по ID
+            intent = stripe.PaymentIntent.retrieve(request.data.get("intent_id"))
+            return Response({"payment_intent": intent}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CourseSubscriptionViewSet(viewsets.ModelViewSet):
     queryset = CourseSubscription.objects.all()
