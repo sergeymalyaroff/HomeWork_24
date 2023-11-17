@@ -22,6 +22,11 @@ class Course(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        for subscriber in self.subscribers.all():
+            send_course_update_email.delay(subscriber.user.email, self.title)
+
 
 
 class Payment(models.Model):

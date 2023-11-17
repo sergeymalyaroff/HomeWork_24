@@ -8,4 +8,7 @@ djangorestframework-simplejwt
 coverage
 drf-yasg
 stripe
-
+django-celery-beat
+redis
+celery
+django-celery-beat
