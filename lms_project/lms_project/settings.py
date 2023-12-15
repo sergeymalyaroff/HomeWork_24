@@ -231,6 +231,15 @@ CELERY_BEAT_SCHEDULE = {
     'send_course_notifications_every_10_minutes': {
         'task': 'courses_app.tasks.send_course_notifications',
         'schedule': timedelta(minutes=10),
+
+
+    },
+}
+
+CELERY_BEAT_SCHEDULE = {
+    'deactivate_inactive_users_every_day': {
+        'task': 'users_app.tasks.deactivate_inactive_users',
+        'schedule': crontab(hour=0, minute=0),  # Выполнять ежедневно в полночь
     },
 }
 

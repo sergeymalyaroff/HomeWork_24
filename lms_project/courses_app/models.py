@@ -1,8 +1,6 @@
-#lms_project/courses_app/models.py
-
 from django.db import models
 from django.conf import settings
-
+from .tasks import send_course_update_email  # Импорт задачи Celery
 
 class CourseSubscription(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='subscriptions')
@@ -11,7 +9,6 @@ class CourseSubscription(models.Model):
 
     class Meta:
         unique_together = ['user', 'course']
-
 
 
 class Course(models.Model):
@@ -23,10 +20,15 @@ class Course(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
+        # Флаг, указывающий, является ли это новым курсом или обновлением существующего
+        is_new = self._state.adding
         super().save(*args, **kwargs)
-        for subscriber in self.subscribers.all():
-            send_course_update_email.delay(subscriber.user.email, self.title)
 
+        # Если это обновление курса, отправляем уведомления
+        if not is_new:
+            subscribers = self.subscribers.all()
+            for subscription in subscribers:
+                send_course_update_email.delay(subscription.user.email, self.title)
 
 
 class Payment(models.Model):
