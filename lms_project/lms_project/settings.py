@@ -228,9 +228,9 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 
 
 CELERY_BEAT_SCHEDULE = {
-    'task-name': {
-        'task': 'myapp.tasks.my_task',  # Путь к задаче
-        'schedule': timedelta(minutes=10),  # Расписание выполнения задачи (например, каждые 10 минут)
+    'send_course_notifications_every_10_minutes': {
+        'task': 'courses_app.tasks.send_course_notifications',
+        'schedule': timedelta(minutes=10),
     },
 }
 

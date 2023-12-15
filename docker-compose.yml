@@ -32,7 +32,7 @@ services:
 
   celery:
     build: ./lms_project
-    command: celery -A lms_project worker --loglevel=info
+    command: celery -A lms_project worker --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:
       - ./lms_project:/usr/src/app
     environment:
