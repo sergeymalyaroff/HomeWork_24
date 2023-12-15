@@ -14,10 +14,10 @@ services:
     image: redis:alpine
 
   web:
-    build: ./lms_project
+    build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./lms_project:/usr/src/app
+      - .:/usr/src/app
     ports:
       - "8000:8000"
     environment:
@@ -31,10 +31,21 @@ services:
       - redis
 
   celery:
-    build: ./lms_project
-    command: celery -A lms_project worker --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    build: .
+    command: celery -A lms_project worker --loglevel=info
     volumes:
-      - ./lms_project:/usr/src/app
+      - .:/usr/src/app
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+
+  celerybeat:
+    build: .
+    command: celery -A lms_project beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - .:/usr/src/app
     environment:
       - REDIS_URL=redis://redis:6379/0
     depends_on:
