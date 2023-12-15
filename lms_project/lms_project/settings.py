@@ -96,13 +96,14 @@ WSGI_APPLICATION = 'lms_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'LMS',
-        'USER': 'postgres',
-        'PASSWORD': config('POSTGRES_PASSWORD'),
-        'HOST': 'localhost',
+        'NAME': os.environ.get('DB_NAME', 'lms_db'),
+        'USER': os.environ.get('DB_USER', 'lms_user'),
+        'PASSWORD': os.environ.get('DB_PASS', 'lms_password'),
+        'HOST': os.environ.get('DB_HOST', 'db'),  # Имя сервиса базы данных в docker-compose.yml
         'PORT': '5432',
     }
 }
@@ -142,7 +143,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Папка для сбора статических файлов
+
+# Дополнительно, для медиа файлов
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -201,7 +208,7 @@ STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
 # Настройки для Celery
 
 # URL-адрес брокера сообщений
-CELERY_BROKER_URL = 'redis://localhost:6379' # Например, Redis, который по умолчанию работает на порту 6379
+CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/0') # Например, Redis, который по умолчанию работает на порту 6379
 
 # URL-адрес брокера результатов, также Redis
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
@@ -230,3 +237,8 @@ EMAIL_HOST_USER = 'your-email@gmail.com'
 EMAIL_HOST_PASSWORD = 'your-password'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
+
+
+
