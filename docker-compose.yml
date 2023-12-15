@@ -12,15 +12,12 @@ services:
 
   redis:
     image: redis:alpine
-    command: redis-server --appendonly yes
-    volumes:
-      - redis_data:/data
 
   web:
-    build: .
+    build: ./lms_project
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/usr/src/app
+      - ./lms_project:/usr/src/app
     ports:
       - "8000:8000"
     environment:
@@ -33,6 +30,16 @@ services:
       - db
       - redis
 
+  celery:
+    build: ./lms_project
+    command: celery -A lms_project worker --loglevel=info
+    volumes:
+      - ./lms_project:/usr/src/app
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+
 volumes:
   postgres_data:
-  redis_data:
