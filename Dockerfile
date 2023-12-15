@@ -9,7 +9,7 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Копирование остальной части проекта
-COPY . .
+COPY lms_project .
 
 # Установка переменных среды
 ENV PYTHONDONTWRITEBYTECODE 1
