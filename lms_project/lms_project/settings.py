@@ -100,13 +100,18 @@ WSGI_APPLICATION = 'lms_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'lms_db'),
-        'USER': os.environ.get('DB_USER', 'lms_user'),
-        'PASSWORD': os.environ.get('DB_PASS', 'lms_password'),
-        'HOST': os.environ.get('DB_HOST', 'db'),  # Имя сервиса базы данных в docker-compose.yml
+        'NAME': config('DB_NAME', default='lms_db'),
+        'USER': config('DB_USER', default='lms_user'),
+        'PASSWORD': config('DB_PASS', default='lms_password'),
+        'HOST': config('DB_HOST', default='db'),  # Используй значение из .env
         'PORT': '5432',
     }
 }
+
+CELERY_BROKER_URL = config('REDIS_URL', default='redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = config('REDIS_URL', default='redis://localhost:6379/0')
+
+
 
 
 # Password validation

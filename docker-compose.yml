@@ -5,10 +5,8 @@ services:
     image: postgres:13
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=lms_db
-      - POSTGRES_USER=lms_user
-      - POSTGRES_PASSWORD=lms_password
+    env_file:
+      - .env  # Используем переменные из файла .env
 
   redis:
     image: redis:alpine
@@ -20,12 +18,8 @@ services:
       - .:/usr/src/app
     ports:
       - "8000:8000"
-    environment:
-      - DB_HOST=db
-      - DB_NAME=lms_db
-      - DB_USER=lms_user
-      - DB_PASS=lms_password
-      - REDIS_URL=redis://redis:6379/0
+    env_file:
+      - .env  # Используем переменные из файла .env
     depends_on:
       - db
       - redis
@@ -35,8 +29,8 @@ services:
     command: celery -A lms_project worker --loglevel=info
     volumes:
       - .:/usr/src/app
-    environment:
-      - REDIS_URL=redis://redis:6379/0
+    env_file:
+      - .env  # Используем переменные из файла .env
     depends_on:
       - web
       - redis
@@ -46,8 +40,8 @@ services:
     command: celery -A lms_project beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:
       - .:/usr/src/app
-    environment:
-      - REDIS_URL=redis://redis:6379/0
+    env_file:
+      - .env  # Используем переменные из файла .env
     depends_on:
       - web
       - redis
