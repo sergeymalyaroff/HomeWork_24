@@ -3,6 +3,8 @@
 from rest_framework import generics
 from .models import Lesson
 from .serializers import LessonSerializer
+from drf_yasg.utils import swagger_auto_schema
+
 
 class LessonListCreateView(generics.ListCreateAPIView):
     queryset = Lesson.objects.all()

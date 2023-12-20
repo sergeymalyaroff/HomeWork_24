@@ -21,6 +21,8 @@ from pathlib import Path
 from decouple import config
 from datetime import timedelta
 import os
+from celery.schedules import crontab
+
 
 
 DEBUG = config('DEBUG', default=False, cast=bool)

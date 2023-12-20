@@ -12,3 +12,5 @@ django-celery-beat
 redis
 celery
 django-celery-beat
+django-filter>=2.0
+
