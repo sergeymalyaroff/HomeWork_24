@@ -206,10 +206,10 @@ SIMPLE_JWT = {
 
 }
 
-
 # Stripe settings
 STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
+
 
 
 # Настройки для Celery
